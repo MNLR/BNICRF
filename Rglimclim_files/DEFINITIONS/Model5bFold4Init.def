@@ -1,0 +1,106 @@
+MODEL SPECIFICATION FILE
+========================
+
+This file is used to define a generalised linear model for daily climate
+sequences. The row following this header is currently reserved for future
+use. The next line can be used to define an overall description of the
+model (which will appear in summary output files). Following this is a
+row for every covariate in the model. Each of these rows looks something
+like this:
+
+COMPONENT       BETA    CODE1   CODE2   CODE3   TEXT
+
+where:
+        COMPONENT is    0 if we're defining the constant term in the model
+                        1 if we're dealing with a main site effect
+                        2 if we're dealing with a main 'year' effect
+                        3 if we're dealing with a main 'month' effect
+                        4 if we're dealing with previous days' rainfall
+                        5 if we're defining 2-way interactions
+                        6 if we're defining 3-way interactions
+                        7 if we're defining nonlinear transformations
+                        8 to define values of 'global'quantities
+                        9 to specify a dispersion parameter
+                       10 for spatial structure
+
+                   and occupies positions 1-5 of the record
+
+        BETA       is the coefficient for this covariate in the model,
+                   occupying positions 6-15 of the record
+
+        CODE1}     are used to define the covariates to the system.
+        CODE2}     The interpretation varies depending on the value
+        CODE3}     of COMPONENT: tables of codes can be found in the
+                   program documentation. CODE1 occupies positions 16-20;
+                   CODE2 occupies positions 21-25 and CODE3 occupies
+                   positions 26-30. CODE2 and CODE3 are used only for
+                   defining interactions.
+
+        TEXT       contains descriptive text for this covariate, and
+                   appears after position 31. It is not used by the program.
+
+It is vital that this positioning is adhered to, for each record will
+be read using the FORTRAN format I5,F10.6,3I5,A40.
+
+This header is 46 lines long.
+-----------------------------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%LINE NOT CURRENTLY USED%%%%%%%%%%%%%%%%%%%%
+FOLD 4 - MODEL 5B
+    0  -12.7072               Constant                                
+    1    0.1075    4          MappedAltitude                            1
+    1    2.1780   13          E-W_slope_1000km^2                        2
+    1    0.3694   15          N-S_slope_100km^2                         3
+    4   -3.3388   21          Daily annual cycle, cosine component      4
+    4   -0.8306   22          Daily annual cycle, sine component        5
+    4    0.0956   23          First harmonic of daily annual cycle, co  6
+    4    0.2308   24          First harmonic of daily annual cycle, si  7
+    4   -0.0309   25          Second harmonic of daily annual cycle, c  8
+    4   -0.0543   26          Second harmonic of daily annual cycle, s  9
+    4    0.1425    1   23    1Distance-weighted mean of I(Precip[t-1]> 10
+    4    0.2423   51    0     MSLP (mbar-1000)                         11
+    4   -3.8758   55    0     850-hPa geopotential (units unclear)     12
+    4   -0.1141   56    0     500-hPa temperature (deg C)              13
+    4   -0.0039   59    0     500-hPa u wind (m/s)                     14
+    4   -0.0143   60    0     700-hPa u wind (m/s)                     15
+    4    0.0815   61    0     850-hPa u wind (m/s)                     16
+    4    0.0172   62    0     500-hPa v wind (m/s)                     17
+    4    0.0067   63    0     700-hPa v wind (m/s)                     18
+    4   -0.0293   64    0     850-hPa v wind (m/s)                     19
+    4    1.0556   67    0     850-hPa specific humidity (g/kg)         20
+    4    0.0229   68    0     500-hPa wind speed (m/s)                 21
+    4   -0.0046   69    0     700-hPa wind speed (m/s)                 22
+    4    0.0180   70    0     850-hPa wind speed (m/s)                 23
+    5    0.0576    1    4     2-way interaction: covariates  1 and  4
+    5    0.0116    1    5     2-way interaction: covariates  1 and  5
+    5    2.5384    2    4     2-way interaction: covariates  2 and  4
+    5   -0.3160    2    5     2-way interaction: covariates  2 and  5
+    5    0.3661    3    4     2-way interaction: covariates  3 and  4
+    5    0.0771    3    5     2-way interaction: covariates  3 and  5
+    5    0.0238    1   10     2-way interaction: covariates  1 and 10
+    5    0.0905    4   10     2-way interaction: covariates  4 and 10
+    5    0.0558    5   10     2-way interaction: covariates  5 and 10
+    5    0.0921   11    4     2-way interaction: covariates 11 and  4
+    5    0.0009   11    5     2-way interaction: covariates 11 and  5
+    5   -0.9629   12    4     2-way interaction: covariates 12 and  4
+    5    0.0665   12    5     2-way interaction: covariates 12 and  5
+    5    0.1079   13    4     2-way interaction: covariates 13 and  4
+    5    0.0142   13    5     2-way interaction: covariates 13 and  5
+    5   -0.0266   14    4     2-way interaction: covariates 14 and  4
+    5    0.0146   14    5     2-way interaction: covariates 14 and  5
+    5    0.1274   15    4     2-way interaction: covariates 15 and  4
+    5   -0.0119   15    5     2-way interaction: covariates 15 and  5
+    5   -0.0684   16    4     2-way interaction: covariates 16 and  4
+    5    0.0089   16    5     2-way interaction: covariates 16 and  5
+    5   -0.0996   17    4     2-way interaction: covariates 17 and  4
+    5   -0.0289   17    5     2-way interaction: covariates 17 and  5
+    5    0.1995   18    4     2-way interaction: covariates 18 and  4
+    5    0.0479   18    5     2-way interaction: covariates 18 and  5
+    5   -0.1400   19    4     2-way interaction: covariates 19 and  4
+    5   -0.0181   19    5     2-way interaction: covariates 19 and  5
+    5    0.1427   20    4     2-way interaction: covariates 20 and  4
+    5    0.1825   20    5     2-way interaction: covariates 20 and  5
+    5    0.0667   23    4     2-way interaction: covariates 23 and  4
+    5    0.0008   23    5     2-way interaction: covariates 23 and  5
+    7    5.6809   10    1    1Parameter 1 in transformation of covariate 10
+    8    0.9500    1    2     'Soft' threshold for +ve values         
+   10    3.0083   21    1     Parameter 1 in spatial dependence model

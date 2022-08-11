@@ -1,0 +1,110 @@
+MODEL SPECIFICATION FILE
+========================
+
+This file is used to define a generalised linear model for daily climate
+sequences. The row following this header is currently reserved for future
+use. The next line can be used to define an overall description of the
+model (which will appear in summary output files). Following this is a
+row for every covariate in the model. Each of these rows looks something
+like this:
+
+COMPONENT       BETA    CODE1   CODE2   CODE3   TEXT
+
+where:
+        COMPONENT is    0 if we're defining the constant term in the model
+                        1 if we're dealing with a main site effect
+                        2 if we're dealing with a main 'year' effect
+                        3 if we're dealing with a main 'month' effect
+                        4 if we're dealing with previous days' rainfall
+                        5 if we're defining 2-way interactions
+                        6 if we're defining 3-way interactions
+                        7 if we're defining nonlinear transformations
+                        8 to define values of 'global'quantities
+                        9 to specify a dispersion parameter
+                       10 for spatial structure
+
+                   and occupies positions 1-5 of the record
+
+        BETA       is the coefficient for this covariate in the model,
+                   occupying positions 6-15 of the record
+
+        CODE1}     are used to define the covariates to the system.
+        CODE2}     The interpretation varies depending on the value
+        CODE3}     of COMPONENT: tables of codes can be found in the
+                   program documentation. CODE1 occupies positions 16-20;
+                   CODE2 occupies positions 21-25 and CODE3 occupies
+                   positions 26-30. CODE2 and CODE3 are used only for
+                   defining interactions.
+
+        TEXT       contains descriptive text for this covariate, and
+                   appears after position 31. It is not used by the program.
+
+It is vital that this positioning is adhered to, for each record will
+be read using the FORTRAN format I5,F10.6,3I5,A40.
+
+This header is 46 lines long.
+-----------------------------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%LINE NOT CURRENTLY USED%%%%%%%%%%%%%%%%%%%%
+MODEL 5A
+    0   -1.8154               Constant                                
+    1    0.0753    4          MappedAltitude                            1
+    1    1.3553   13          E-W_slope_1000km^2                        2
+    1    0.3839   15          N-S_slope_100km^2                         3
+    4   -0.4083   21          Daily annual cycle, cosine component      4
+    4   -0.0943   22          Daily annual cycle, sine component        5
+    4    0.0749   23          First harmonic of daily annual cycle, co  6
+    4   -0.0045   24          First harmonic of daily annual cycle, si  7
+    4   -0.0399   25          Second harmonic of daily annual cycle, c  8
+    4   -0.0366   26          Second harmonic of daily annual cycle, s  9
+    4    1.8558    1   23    1Distance-weighted mean of I(Precip[t-1]> 10
+    4    0.0000   51
+    4    0.0000   55
+    4    0.0000   56
+    4    0.0000   59
+    4    0.0000   60
+    4    0.0000   61
+    4    0.0000   62
+    4    0.0000   63
+    4    0.0000   64
+    4    0.0000   67
+    4    0.0000   68
+    4    0.0000   69
+    4    0.0000   70
+    5    0.0447    1    4     2-way interaction: covariates  1 and  4
+    5    0.0092    1    5     2-way interaction: covariates  1 and  5
+    5    1.9130    2    4     2-way interaction: covariates  2 and  4
+    5    0.0222    2    5     2-way interaction: covariates  2 and  5
+    5    0.3639    3    4     2-way interaction: covariates  3 and  4
+    5    0.0072    3    5     2-way interaction: covariates  3 and  5
+    5    0.0443    1   10     2-way interaction: covariates  1 and 10
+    5    0.3958    4   10     2-way interaction: covariates  4 and 10
+    5    0.1454    5   10     2-way interaction: covariates  5 and 10
+    5    0.0000   11    4
+    5    0.0000   11    5
+    5    0.0000   12    4
+    5    0.0000   12    5
+    5    0.0000   13    4
+    5    0.0000   13    5
+    5    0.0000   14    4
+    5    0.0000   14    5
+    5    0.0000   15    4
+    5    0.0000   15    5
+    5    0.0000   16    4
+    5    0.0000   16    5
+    5    0.0000   17    4
+    5    0.0000   17    5
+    5    0.0000   18    4
+    5    0.0000   18    5
+    5    0.0000   19    4
+    5    0.0000   19    5
+    5    0.0000   20    4
+    5    0.0000   20    5
+    5    0.0000   21    4
+    5    0.0000   21    5
+    5    0.0000   22    4
+    5    0.0000   22    5
+    5    0.0000   23    4
+    5    0.0000   23    5
+    7    0.3968   10    1    1Parameter 1 in transformation of covariate 10
+    8    0.9500    1    2     'Soft' threshold for +ve values         
+   10    3.6436   21    1     Parameter 1 in spatial dependence model
